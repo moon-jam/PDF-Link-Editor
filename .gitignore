@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.DS_Store
+*.log
+
+# Test artifacts and fixtures
+test-results/
+playwright-report/
+tests/with-links.pdf
