@@ -77,6 +77,13 @@ async function loadSample(page) {
   await page.waitForSelector('.page[data-page-number="1"] .overlay');
 }
 
+// Suppress the first-visit intro modal so it doesn't sit over the UI in tests.
+test.beforeEach(async ({ page }) => {
+  await page.addInitScript(() => {
+    try { localStorage.setItem('intro-dismissed', '1'); } catch { /* ignore */ }
+  });
+});
+
 test('fix an existing link, add a new one, export', async ({ page }) => {
   await loadSample(page);
 

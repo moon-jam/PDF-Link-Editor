@@ -530,6 +530,17 @@ input[type='number'] {
   content: ''; position: absolute; left: 0.1rem; top: 0.55rem;
   width: 5px; height: 5px; border-radius: 50%; background: var(--accent);
 }
+.intro__actions {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem; margin-top: 1.2rem;
+}
+.intro__dismiss {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 0.85rem; color: var(--muted);
+  cursor: pointer; user-select: none;
+}
+.intro__dismiss input { cursor: pointer; accent-color: var(--accent); }
+
 .intro__foot {
   margin: 1.5rem 0 0; padding-top: 1rem;
   border-top: 1px solid var(--hairline);

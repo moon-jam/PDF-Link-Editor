@@ -31,6 +31,13 @@ test.beforeAll(async () => {
   writeFileSync(FIXTURE, await doc.save());
 });
 
+// Suppress the first-visit intro modal so it doesn't sit over the UI in tests.
+test.beforeEach(async ({ page }) => {
+  await page.addInitScript(() => {
+    try { localStorage.setItem('intro-dismissed', '1'); } catch { /* ignore */ }
+  });
+});
+
 // Regression: some PDFs store /Dest as an indirect reference to the dest array
 // (e.g. "/Dest 61 0 R"). The reader must dereference it, not give up.
 test('resolves a /Dest given as an indirect reference', async () => {

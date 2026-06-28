@@ -43,6 +43,8 @@ const themeBtn = $('theme-btn');
 const helpBtn = $('help-btn');
 const helpPanel = $('help-panel');
 const helpClose = $('help-close');
+const helpGotIt = $('help-got-it');
+const helpDontShow = $('help-dontshow');
 
 const addLinkBtn = $('add-link');
 const targetPanel = $('target-panel');
@@ -1119,7 +1121,23 @@ function updateChooserReset() {
 // ============================================================
 helpBtn.addEventListener('click', () => (helpPanel.hidden = false));
 helpClose.addEventListener('click', () => (helpPanel.hidden = true));
+helpGotIt.addEventListener('click', () => (helpPanel.hidden = true));
 helpPanel.addEventListener('click', (e) => { if (e.target === helpPanel) helpPanel.hidden = true; });
+
+// The intro shows automatically on first visit; the checkbox opts out of that
+// (the help button still opens it any time). The preference is remembered.
+const INTRO_KEY = 'intro-dismissed';
+const introDismissed = () => {
+  try { return localStorage.getItem(INTRO_KEY) === '1'; } catch { return false; }
+};
+helpDontShow.checked = introDismissed();
+helpDontShow.addEventListener('change', () => {
+  try {
+    if (helpDontShow.checked) localStorage.setItem(INTRO_KEY, '1');
+    else localStorage.removeItem(INTRO_KEY);
+  } catch { /* ignore */ }
+});
+if (!introDismissed()) helpPanel.hidden = false;
 
 let toastTimer = null;
 function toast(msg) {
